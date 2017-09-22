@@ -61,7 +61,9 @@ Notes:
 					backQueryString="optionGroupID=#rc.optionGroup.getOptionGroupID()#"
 					cancelAction="admin:entity.detailoptiongroup"
 					cancelQueryString="optionGroupID=#rc.optionGroup.getOptionGroupID()#"
-					deleteQueryString="redirectAction=admin:entity.detailoptiongroup&optionGroupID=#rc.optionGroup.getOptionGroupID()#" />
+					deleteQueryString="redirectAction=admin:entity.detailoptiongroup&optionGroupID=#rc.optionGroup.getOptionGroupID()#" >
+			<hb:HibachiProcessCaller entity="#rc.option#" action="admin:entity.processoption" processContext="processOption_removeFromAll" type="list" confirm="true" confirmtext="#$.slatwall.rbKey('entity.Product.process.updateDefaultImageFileNames_confirm')#" />
+		</hb:HibachiEntityActionBar>
 					
 		<input type="hidden" name="optionGroup.optionGroupID" value="#rc.optionGroup.getOptionGroupID()#" />
 

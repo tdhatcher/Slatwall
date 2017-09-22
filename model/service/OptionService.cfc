@@ -51,6 +51,7 @@ component extends="HibachiService" accessors="true" output="false" {
 	property name="optionDAO" type="any";
 
 	property name="productService" type="any";
+	property name="skuService" type="any";
 
 	public array function getOptionsForSelect(required any options){
 		var sortedOptions = [];
@@ -80,6 +81,42 @@ component extends="HibachiService" accessors="true" output="false" {
 	// ===================== START: DAO Passthrough ===========================
 
 	// ===================== START: Process Methods ===========================
+
+	public any function processOption_removeFromAll(required any option, required struct data) {
+
+		if (arrayLen(arguments.option.getSkus())) {
+			// Remove the option from each sku relationship and make set each sku to inactive
+			while (arrayLen(arguments.option.getSkus())) {
+				var sku = arguments.option.getSkus()[1];
+				sku.setActiveFlag(false);
+				sku.setPublishedFlag(false);
+				arguments.option.setActiveFlag(false);
+				arguments.option.removeSku(sku);
+
+				// Update sku
+				getSkuService().saveSku(sku);
+			}
+
+			// Update option
+			this.saveOption(option);
+		} else {
+			logHibachi("Option '#arguments.option.getOptionID()#' has no skus to remove. This process should have been disabled in the detail view.");
+		}
+
+
+
+		/*`
+		if(!isNull(option)) {
+			// FIXME Handle potential edge case scenario 
+			// when option is removed from product and 
+			// the product no longer has an active sku
+			
+		}
+		*/
+		
+
+		return arguments.option;
+	}
 
 	// =====================  END: Process Methods ============================
 
