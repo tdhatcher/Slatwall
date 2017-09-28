@@ -85,21 +85,31 @@ component extends="HibachiService" accessors="true" output="false" {
 	public any function processOption_removeFromAll(required any option, required struct data) {
 
 		if (arrayLen(arguments.option.getSkus())) {
-			// Remove the option from each sku relationship and make set each sku to inactive
-			while (arrayLen(arguments.option.getSkus())) {
-				var sku = arguments.option.getSkus()[1];
+			// create reference array of skus to remove
+			var skus = [];
+			for (var sku in arguments.option.getSkus()) {
+				arrayAppend(skus, sku);
+			}
+
+			// Now remove the option from each sku relationship and set the respective sku to inactive (cannot delete might be in orders)
+			for (var sku in skus) {
 				sku.setActiveFlag(false);
 				sku.setPublishedFlag(false);
-				arguments.option.setActiveFlag(false);
-				arguments.option.removeSku(sku);
+				sku.removeOption(arguments.option);
 
-				// Update sku
-				getSkuService().saveSku(sku);
+				getSkuService().saveSku(sku=sku, context="optionRemoval");
+				
+				// FIXME remove option group from sku if necessary?
+				
+				// FIXME What if product doesn't have a default sku now?
+				// Should we make the product inactive?
 			}
 
 			// Update option
-			this.saveOption(option);
+			arguments.option.setActiveFlag(false);
+			this.saveOption(arguments.option);
 		} else {
+			// FIXME add proper validation regarding sku collection
 			logHibachi("Option '#arguments.option.getOptionID()#' has no skus to remove. This process should have been disabled in the detail view.");
 		}
 

@@ -12,25 +12,24 @@
  	    },
  	    "trackedByMeasurement":{
  	    	"inventoryTrackBy": {"neq":"Quantity"}
- 	    }
+		}
 	},
 	"properties":{
 		"defaultFlag":				[{"contexts":"delete","eq":false}],
-		"listPrice":				[{"contexts":"save","dataType":"numeric","minValue":0}],
+		"listPrice":				[{"contexts":"save,optionRemoval","dataType":"numeric","minValue":0}],
 		"options":					[
 			{"contexts":"save","method":"hasUniqueOptions","conditions":"notSkuBundle"},
 			{"contexts":"save","method":"hasOneOptionPerOptionGroup"}
 		],
-		"price":			   		[{"contexts":"save","required":true,"dataType":"numeric","minValue":0}],
-		"product":					[{"contexts":"save","required":true}],
-		"renewalPrice":				[{"contexts":"save","dataType":"numeric","minValue":0}],
-		"skuCode":					[{"contexts":"save","required":true,"unique":true,"regex":"^[a-zA-Z0-9-_.|:~^]+$"}],
+		"price":			   		[{"contexts":"save,optionRemoval","required":true,"dataType":"numeric","minValue":0}],
+		"product":					[{"contexts":"save,optionRemoval","required":true}],
+		"renewalPrice":				[{"contexts":"save,optionRemoval","dataType":"numeric","minValue":0}],
+		"skuCode":					[{"contexts":"save,optionRemoval","required":true,"unique":true,"regex":"^[a-zA-Z0-9-_.|:~^]+$"}],
 		"redemptionAmount":			[{"conditions":"isGiftCardSku", "dataType":"numeric","minValue":0}],
 		"redemptionAmountType":     [{"conditions":"isGiftCardSku", "required":true}],
 		"transactionExistsFlag":	[{"contexts":"delete","eq":false}],
 		"physicalCounts":			[{"contexts":"delete","maxCollection":0}],
-		"redemptionAmount":	[{"conditions":"isGiftCardSku", "dataType":"numeric", "minValue":0}],
-		"eventConflictExistsFlag":  [{"contexts":"save","conditions":"eventSku","eq":false}],
-		"measurementUnitID":	[{"contexts":"save","conditions":"trackedByMeasurement","required":true}]
+		"eventConflictExistsFlag":  [{"contexts":"save,optionRemoval","conditions":"eventSku","eq":false}],
+		"measurementUnitID":	[{"contexts":"save,optionRemoval","conditions":"trackedByMeasurement","required":true}]
 	}
 }
