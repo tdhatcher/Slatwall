@@ -620,7 +620,9 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 
 	// ====================== START: Save Overrides ===========================
 
-	public any function saveSku(required any sku, required struct data={}){
+	public any function saveSku(required any sku, required struct data={}, context="save"){
+		arguments.entity = arguments.sku;
+		
 		var previousActiveState = arguments.sku.getActiveFlag();
 		if(arguments.sku.getProduct().getBaseProductType() == "subscription"){
 			if(structKeyExists(arguments.data,"renewalMethod")){
@@ -636,7 +638,7 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 				}
 			}
 		}
-		arguments.sku = super.save(entity=arguments.sku, data=arguments.data);
+		arguments.sku = super.save(argumentCollection=arguments);
 		
 		if(!sku.hasErrors()){
 			if(!arguments.sku.isNew() && previousActiveState == 1 && arguments.sku.getActiveFlag() == 0){
