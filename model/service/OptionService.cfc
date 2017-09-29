@@ -91,7 +91,11 @@ component extends="HibachiService" accessors="true" output="false" {
 				arrayAppend(skus, sku);
 			}
 
-			// Now remove the option from each sku relationship and set the respective sku to inactive (cannot delete might be in orders)
+			// Next remove the option from each sku relationship and set the respective sku to inactive (cannot actually delete might be in orders)
+			// Potential edge case scenarios
+			// 1. What if sku has multiple options? Should those options also be removed?
+			// 3. What if sku to remove is the defaultSku for product, should there be a SkuService process to change defaultSku?
+			// 2. What if product no longer has active sku? Should product also be set to inactive?
 			for (var sku in skus) {
 				sku.setActiveFlag(false);
 				sku.setPublishedFlag(false);
@@ -103,30 +107,13 @@ component extends="HibachiService" accessors="true" output="false" {
 					getProductService().saveProduct(product=sku.getProduct());
 				}
 
-				// TODO What happens if sku has multiple options? Should those options also be removed?
-
 				getSkuService().saveSku(sku=sku, context="optionRemoval");
 			}
 
 			// Update option
 			arguments.option.setActiveFlag(false);
 			this.saveOption(entity=arguments.option, context="optionRemoval");
-		} else {
-			// TODO add proper validation regarding sku collection
-			logHibachi("Option '#arguments.option.getOptionID()#' has no skus to remove. This process should have been disabled in the detail view.");
-		}
-
-
-
-		/*`
-		if(!isNull(option)) {
-			// FIXME Handle potential edge case scenario 
-			// when option is removed from product and 
-			// the product no longer has an active sku
-			
-		}
-		*/
-		
+		}	
 
 		return arguments.option;
 	}
