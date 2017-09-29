@@ -313,6 +313,14 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 		}
 		return sku;
 	}
+	
+	// @help Sets sku as the default sku of the product
+	public any function processSku_setAsDefaultSku(required any sku) {
+		arguments.sku.getProduct().setDefaultSku(arguments.sku);
+		getProductService().saveProduct(product=arguments.sku.getProduct());
+
+		return arguments.sku;
+	}
 
 	// @help Removes locations from event skus
 	public any function processSku_removeLocation(required any sku, required any processObject) {

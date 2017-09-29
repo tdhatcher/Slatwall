@@ -94,8 +94,9 @@ component extends="HibachiService" accessors="true" output="false" {
 			// Next remove the option from each sku relationship and set the respective sku to inactive (cannot actually delete might be in orders)
 			// Potential edge case scenarios
 			// 1. What if sku has multiple options? Should those options also be removed?
-			// 3. What if sku to remove is the defaultSku for product, should there be a SkuService process to change defaultSku?
-			// 2. What if product no longer has active sku? Should product also be set to inactive?
+			// 2. What if sku to remove is the defaultSku for product, should there be a SkuService process to change defaultSku?
+			// 3. What if product no longer has active sku? Should product also be set to inactive?
+			// 4. Cannot edit sku after detached from all options
 			for (var sku in skus) {
 				sku.setActiveFlag(false);
 				sku.setPublishedFlag(false);

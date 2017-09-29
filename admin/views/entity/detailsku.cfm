@@ -68,6 +68,7 @@ Notes:
 				<li class="divider"></li>
 			<cfelse>
 				<hb:HibachiProcessCaller entity="#rc.sku#" action="admin:entity.preprocesssku" processContext="createBOM" type="list" modal="false" />
+				<hb:HibachiProcessCaller entity="#rc.sku#" action="admin:entity.processsku" processContext="setAsDefaultSku" type="list" modal="false" hideDisabled="false" confirm="true" confirmtext="#$.slatwall.rbKey('admin.entity.processsku.setAsDefaultSku_confirm')#" />
 			</cfif>
 			<hb:HibachiActionCaller action="admin:entity.createalternateskucode" querystring="skuID=#rc.sku.getSkuID()#&redirectAction=#request.context.slatAction#" type="list" modal="true" />
 			<cfif rc.product.getBaseProductType() EQ "event">

@@ -15,7 +15,7 @@
 		}
 	},
 	"properties":{
-		"defaultFlag":				[{"contexts":"delete","eq":false}],
+		"defaultFlag":				[{"contexts":"delete,setAsDefaultSku","eq":false}],
 		"listPrice":				[{"contexts":"save,optionRemoval","dataType":"numeric","minValue":0}],
 		"options":					[
 			{"contexts":"save","method":"hasUniqueOptions","conditions":"notSkuBundle"},
