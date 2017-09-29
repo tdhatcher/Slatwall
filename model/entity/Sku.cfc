@@ -1511,6 +1511,12 @@ component entityname="SlatwallSku" table="SwSku" persistent=true accessors=true 
 		if(isNull(getProduct()) || getProduct().getNewFlag()) {
 			return true;
 		}
+
+		// Passing empty optionsList of IDs to getSkusBySelectedOptions will return all skus
+		if (!listLen(optionsList)) {
+			return true;
+		}
+
 		var skus = getProduct().getSkusBySelectedOptions(selectedOptions=optionsList);
 		if(!arrayLen(skus) || (arrayLen(skus) == 1 && skus[1].getSkuID() == getSkuID() )) {
 			return true;
