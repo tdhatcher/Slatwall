@@ -62,9 +62,9 @@ Notes:
 					cancelAction="admin:entity.detailoptiongroup"
 					cancelQueryString="optionGroupID=#rc.optionGroup.getOptionGroupID()#"
 					deleteQueryString="redirectAction=admin:entity.detailoptiongroup&optionGroupID=#rc.optionGroup.getOptionGroupID()#" >
-			<hb:HibachiProcessCaller entity="#rc.option#" action="admin:entity.processoption" processContext="processOption_removeFromAll" type="list" confirm="true" confirmtext="#$.slatwall.rbKey('entity.Product.process.updateDefaultImageFileNames_confirm')#" />
+			<hb:HibachiProcessCaller entity="#rc.option#" action="admin:entity.processoption" processContext="removeFromAll" type="list" confirm="true" hideDisabled="false" confirmtext="#$.slatwall.rbKey('admin.entity.processoption.removeFromAll_confirm')#" />
 		</hb:HibachiEntityActionBar>
-					
+		
 		<input type="hidden" name="optionGroup.optionGroupID" value="#rc.optionGroup.getOptionGroupID()#" />
 
 		<hb:HibachiEntityDetailGroup object="#rc.option#">
@@ -74,5 +74,5 @@ Notes:
 		</hb:HibachiEntityDetailGroup>
 		
 	</hb:HibachiEntityDetailForm>
-	
+
 </cfoutput>

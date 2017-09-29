@@ -3,6 +3,6 @@
 		"optionCode":			[{"contexts":"save", "unique":true,"required":true,"regex":"^[a-zA-Z0-9-_.|:~^]+$"}],
 		"optionName":			[{"contexts":"save","required":true}],
 		"optionGroup":			[{"contexts":"save","required":true}],
-		"skus":					[{"contexts":"delete","maxCollection":0}]
+		"skus":					[{"contexts":"delete","maxCollection":0},{"contexts":"removeFromAll","minCollection":1}]
 	}
 }

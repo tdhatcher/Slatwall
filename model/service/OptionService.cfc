@@ -97,19 +97,22 @@ component extends="HibachiService" accessors="true" output="false" {
 				sku.setPublishedFlag(false);
 				sku.removeOption(arguments.option);
 
+				// If sku is the default for product, remove that association
+				if (sku.getDefaultFlag()) {
+					sku.getProduct().setDefaultSku(javaCast("null", ""));
+					getProductService().saveProduct(product=sku.getProduct());
+				}
+
+				// TODO What happens if sku has multiple options? Should those options also be removed?
+
 				getSkuService().saveSku(sku=sku, context="optionRemoval");
-				
-				// FIXME remove option group from sku if necessary?
-				
-				// FIXME What if product doesn't have a default sku now?
-				// Should we make the product inactive?
 			}
 
 			// Update option
 			arguments.option.setActiveFlag(false);
-			this.saveOption(arguments.option);
+			this.saveOption(entity=arguments.option, context="optionRemoval");
 		} else {
-			// FIXME add proper validation regarding sku collection
+			// TODO add proper validation regarding sku collection
 			logHibachi("Option '#arguments.option.getOptionID()#' has no skus to remove. This process should have been disabled in the detail view.");
 		}
 
